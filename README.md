@@ -1,3 +1,0 @@
-# HowTo
-
-# Final thesis project
