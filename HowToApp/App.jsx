@@ -10,21 +10,21 @@ import Realm from 'realm';
 import {createRealmContext} from '@realm/react';
 import realmConfig from './src/data/config/howto-realm';
 import {Solucion} from './src/data/models/howto-models';
-import {
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  useColorScheme,
-} from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import HomeScreen from './src/screens/HomeScreen';
+import OnboardingScreen from './src/screens/OnboardingScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Appearance} from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+const Stack = createNativeStackNavigator();
+
+import {Platform, Text} from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 // Create a realm context
 const {RealmProvider, useRealm, useObject, useQuery} =
   createRealmContext(realmConfig);
-const birthday3 = new Date();
 
 function TestComponent() {
   const realm = useRealm();
@@ -54,27 +54,42 @@ function TestComponent() {
   return <Text>Hola</Text>;
 }
 
+Appearance.getColorScheme();
+
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-  console.log(birthday3);
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   useEffect(() => {
     if (Platform.OS === 'android') SplashScreen.hide();
   }, []);
 
+  const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null);
+
+  useEffect(() => {
+    async function checkFirstLaunched() {
+      const appData = await AsyncStorage.getItem('isAppFirstLaunched');
+
+      if (appData === null) {
+        setIsAppFirstLaunched(true);
+      } else setIsAppFirstLaunched(false);
+    }
+    checkFirstLaunched();
+  }, []);
+
   return (
-    <RealmProvider>
-      <SafeAreaView style={backgroundStyle}>
-        <ScrollView>
-          <Text className="text-4xl bg-blue-300 mt-10">Esto es una prueba</Text>
-          <TestComponent />
-        </ScrollView>
-      </SafeAreaView>
-    </RealmProvider>
+    isAppFirstLaunched !== null && (
+      <RealmProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{headerShown: false}}>
+            {isAppFirstLaunched && (
+              <Stack.Screen
+                name="OnBoardingScreen"
+                component={OnboardingScreen}
+              />
+            )}
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </RealmProvider>
+    )
   );
 }
 
