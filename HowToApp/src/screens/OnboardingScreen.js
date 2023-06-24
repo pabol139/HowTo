@@ -56,10 +56,10 @@ const Slide = ({item}) => {
           resizeMode: 'contain',
         }}></Image>
       <View className="w-full text-center items-center h-full">
-        <Text className="text-[#3F3F3F] text-2xl font-bold mt-5 mb-5">
+        <Text className="text-[#3F3F3F] text-2xl font-['Inter-Bold'] mt-5 mb-5">
           {item.title}
         </Text>
-        <Text className="max-w-[75%] text-[#3F3F3F] text-center text-base overflow-visible">
+        <Text className="max-w-[75%] font-['Inter-Regular'] text-[#3F3F3F] text-center text-base overflow-visible">
           {item.subtitle}
         </Text>
       </View>
@@ -87,11 +87,13 @@ const OnBoardingScreen = ({navigation}) => {
             <View>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.replace('HomeScreen');
+                  navigation.replace('Home');
                   AsyncStorage.setItem('isAppFirstLaunched', 'false');
                 }}
                 className="h-[50px] rounded-md bg-[#3282FD] items-center justify-center">
-                <Text className="font-bold text-base text-white">COMENZAR</Text>
+                <Text className="font-['Inter-Bold'] text-base text-white">
+                  COMENZAR
+                </Text>
               </TouchableOpacity>
             </View>
           ) : (
@@ -99,14 +101,14 @@ const OnBoardingScreen = ({navigation}) => {
               <TouchableOpacity
                 onPress={skipSlides}
                 className="flex-1 h-[50px] rounded-md border-2 border-[#3282FD] items-center justify-center">
-                <Text className="font-bold text-base text-[#3282FD]">
+                <Text className="font-['Inter-Bold'] text-base text-[#3282FD]">
                   SALTAR
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={goNextSlide}
                 className="flex-1 h-[50px] rounded-md bg-[#3282FD] items-center justify-center">
-                <Text className="font-bold text-base text-white">
+                <Text className="font-['Inter-Bold'] text-base text-white">
                   SIGUIENTE
                 </Text>
               </TouchableOpacity>
