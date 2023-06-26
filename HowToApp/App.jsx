@@ -12,8 +12,8 @@ import realmContext from './src/data/config/howto-realm';
 import {Solucion} from './src/data/models/howto-models';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeScreen from './src/screens/HomeScreen';
 import OnboardingScreen from './src/screens/OnboardingScreen';
+import SearchScreenFirstStep from './src/screens/SearchScreenFirstStep';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BottomNavigator from './src/navigation/BottomNavigator';
 import {Appearance} from 'react-native';
@@ -58,6 +58,7 @@ function App() {
               />
             )}
             <Stack.Screen name="Home" component={BottomNavigator} />
+            <Stack.Screen name="FirstStep" component={SearchScreenFirstStep} />
           </Stack.Navigator>
         </NavigationContainer>
       </RealmProvider>

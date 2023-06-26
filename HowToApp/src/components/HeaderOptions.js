@@ -1,17 +1,38 @@
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView, Text, View, TouchableOpacity} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import FontIcon from 'react-native-vector-icons/FontAwesome5';
+import AntIcon from 'react-native-vector-icons/AntDesign';
 
-const HeaderOptions = ({goBack, warning, favouriteOption}) => {
-  goBack = true;
-  warning = true;
-  favouriteOption = false;
+const HeaderOptions = ({
+  navigation,
+  goBack,
+  warning,
+  favouriteOption,
+  settings,
+}) => {
+  var alignment = 'justify-between';
+  if (goBack && !warning && !favouriteOption && !settings)
+    alignment = 'justify-start';
+  else if (!goBack && !warning && !favouriteOption && settings)
+    alignment = 'justify-end';
+
+  const goPreviousScreen = () => {
+    navigation.pop();
+  };
+
   return (
-    <SafeAreaView className="flex-row w-full justify-between">
+    <SafeAreaView className={`flex-row w-full ${alignment}`}>
       {goBack && (
-        <View className="mt-5 ml-5 w-12 h-12 items-center justify-center bg-[#F4F3F6] rounded-full">
+        <TouchableOpacity
+          className="mt-5 ml-5 w-12 h-12 items-center justify-center bg-[#F4F3F6] rounded-full"
+          onPress={() => goPreviousScreen()}>
           <FontIcon name="chevron-left" color="#3F434A" size={26}></FontIcon>
+        </TouchableOpacity>
+      )}
+      {favouriteOption && (
+        <View className="mt-5 ml-5 w-12 h-12 items-center justify-center bg-[#F4F3F6] rounded-full">
+          <AntIcon name="staro" color="#3F434A" size={30}></AntIcon>
         </View>
       )}
       {warning && (
@@ -19,9 +40,11 @@ const HeaderOptions = ({goBack, warning, favouriteOption}) => {
           <IonIcon name="ios-warning" color="#F3530E" size={28}></IonIcon>
         </View>
       )}
-      <View className="mt-5 mr-5 w-12 h-12 items-center justify-center bg-[#F4F3F6] rounded-full">
-        <IonIcon name="settings-sharp" color="#3F434A" size={30}></IonIcon>
-      </View>
+      {settings && (
+        <View className="mt-5 mr-5 w-12 h-12 items-center justify-center bg-[#F4F3F6] rounded-full">
+          <IonIcon name="settings-sharp" color="#3F434A" size={30}></IonIcon>
+        </View>
+      )}
     </SafeAreaView>
   );
 };

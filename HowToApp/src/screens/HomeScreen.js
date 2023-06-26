@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import HeaderOptions from '../components/HeaderOptions';
 import Option from '../components/Option';
 import realmContext from '../data/config/howto-realm';
+import CustomText from '../components/CustomText';
 
 const {RealmProvider, useQuery, useRealm} = realmContext;
 
@@ -52,14 +53,16 @@ const HomeScreen = () => {
   console.log(slicedSolutions);
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <HeaderOptions></HeaderOptions>
+      <HeaderOptions settings={true}></HeaderOptions>
       <SectionList
         sections={recentOptions}
         className="mt-10 px-6"
         keyExtractor={(item, index) => item + index}
         renderItem={({item}) => <Option>{item.query}</Option>}
         renderSectionHeader={({section: {title}}) => (
-          <Text className="text-2xl text-[#3F3F3F]">{title}</Text>
+          <CustomText weight={'semi-bold'} style={'text-2xl text-[#3F3F3F]'}>
+            {title}
+          </CustomText>
         )}></SectionList>
       <Image
         source={require('../assets/images/home.png')}
@@ -69,12 +72,12 @@ const HomeScreen = () => {
           marginLeft: 30,
           resizeMode: 'contain',
         }}></Image>
-      <TouchableOpacity onPress={() => addSolution()}>
+      {/* <TouchableOpacity onPress={() => addSolution()}>
         <Text>Añadir</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => deleteSolutions()}>
         <Text>Borrar</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </SafeAreaView>
   );
 };

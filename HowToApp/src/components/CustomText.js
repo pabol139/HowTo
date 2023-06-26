@@ -8,17 +8,16 @@ import {
 
 const fontMap = new Map();
 
-fontMap.set('light', 'Inter-Light');
-fontMap.set('regular', 'Inter-Regular');
-fontMap.set('medium', 'Inter-Medium');
-fontMap.set('bold', 'Inter-Bold');
+fontMap.set('light', "font-['Inter-Light']");
+fontMap.set('regular', "font-['Inter-Regular']");
+fontMap.set('medium', "font-['Inter-Medium']");
+fontMap.set('semi-bold', "font-['Inter-SemiBold']");
+fontMap.set('bold', "font-['Inter-Bold']");
 
-const Text = ({weight}) => {
-  console.log(style);
+const CustomText = ({weight, style, children}) => {
   const fontWeight = fontMap.get(weight);
-  console.log(fontWeight);
 
-  return <ReactText className={`font-['${fontWeight}']`}>{children}</ReactText>;
+  return <ReactText className={`${fontWeight} ${style}`}>{children}</ReactText>;
 };
 
 export default CustomText;
