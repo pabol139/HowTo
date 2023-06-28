@@ -6,24 +6,29 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 
 const HeaderOptions = ({
   navigation,
-  goBack,
+  showBack,
   warning,
   favouriteOption,
   settings,
 }) => {
   var alignment = 'justify-between';
-  if (goBack && !warning && !favouriteOption && !settings)
+  if (showBack && !warning && !favouriteOption && !settings)
     alignment = 'justify-start';
-  else if (!goBack && !warning && !favouriteOption && settings)
+  else if (!showBack && !warning && !favouriteOption && settings)
     alignment = 'justify-end';
 
+  const {goBack} = navigation;
+
   const goPreviousScreen = () => {
-    navigation.pop();
+    goBack();
   };
 
+  const goSettings = () => {
+    navigation.push('Settings');
+  };
   return (
     <SafeAreaView className={`flex-row w-full ${alignment}`}>
-      {goBack && (
+      {showBack && (
         <TouchableOpacity
           className="mt-5 ml-5 w-12 h-12 items-center justify-center bg-[#F4F3F6] rounded-full"
           onPress={() => goPreviousScreen()}>
@@ -41,9 +46,11 @@ const HeaderOptions = ({
         </View>
       )}
       {settings && (
-        <View className="mt-5 mr-5 w-12 h-12 items-center justify-center bg-[#F4F3F6] rounded-full">
-          <IonIcon name="settings-sharp" color="#3F434A" size={30}></IonIcon>
-        </View>
+        <TouchableOpacity onPress={() => goSettings()}>
+          <View className="mt-5 mr-5 w-12 h-12 items-center justify-center bg-[#F4F3F6] rounded-full">
+            <IonIcon name="settings-sharp" color="#3F434A" size={30}></IonIcon>
+          </View>
+        </TouchableOpacity>
       )}
     </SafeAreaView>
   );

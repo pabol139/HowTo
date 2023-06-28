@@ -17,6 +17,7 @@ import SearchScreenFirstStep from './src/screens/SearchScreenFirstStep';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BottomNavigator from './src/navigation/BottomNavigator';
 import {Appearance} from 'react-native';
+import SettingsScreen from './src/screens/SettingsScreen';
 
 const {RealmProvider} = realmContext;
 const Stack = createNativeStackNavigator();
@@ -58,7 +59,7 @@ function App() {
               />
             )}
             <Stack.Screen name="Home" component={BottomNavigator} />
-            <Stack.Screen name="FirstStep" component={SearchScreenFirstStep} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </RealmProvider>

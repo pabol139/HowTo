@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import HeaderOptions from '../components/HeaderOptions';
-import Option from '../components/Option';
+import Solution from '../components/Solution';
 import realmContext from '../data/config/howto-realm';
 import CustomText from '../components/CustomText';
 
@@ -17,7 +17,7 @@ const {RealmProvider, useQuery, useRealm} = realmContext;
 
 //const solutions = useQuery('Solucion');
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const realm = useRealm();
   const solutions = useQuery('Solucion');
   const mostRecentSolutions = solutions.sorted('created_at', true);
@@ -53,12 +53,12 @@ const HomeScreen = () => {
   console.log(slicedSolutions);
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <HeaderOptions settings={true}></HeaderOptions>
+      <HeaderOptions navigation={navigation} settings={true}></HeaderOptions>
       <SectionList
         sections={recentOptions}
         className="mt-10 px-6"
         keyExtractor={(item, index) => item + index}
-        renderItem={({item}) => <Option>{item.query}</Option>}
+        renderItem={({item}) => <Solution>{item.query}</Solution>}
         renderSectionHeader={({section: {title}}) => (
           <CustomText weight={'semi-bold'} style={'text-2xl text-[#3F3F3F]'}>
             {title}
