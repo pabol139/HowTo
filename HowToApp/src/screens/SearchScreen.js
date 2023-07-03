@@ -37,14 +37,7 @@ const SearchScreen = ({navigation}) => {
       messages: [
         {
           role: 'system',
-          content: `El usuario introduce esta frase: "${text}".
-          Analiza el corpus de la frase que introduzca el usuario.
-          Si es una palabra ofensiva:"Lenguaje ofensivo".
-          En el caso de que no lo sea,
-          proporciona varias acciones interpretando qué es lo que quiere preguntar el usuario.
-          Por ejemplo, si el usuario dice "quiero arreglar mi nevera", tu sugeriras "Arreglar nevera"
-          Mínimo 2 y un máximo de 3, ponlas en este formato y no digas nada más.
-          Respondes solo en formato en este formato JSON: ["Arreglar nevera", "Reparar nevera"].
+          content: `El usuario introduce esta frase: "${text}". Analiza el corpus de la frase que introduzca el usuario. Si es una palabra ofensiva:"Lenguaje ofensivo". En el caso de que no lo sea, proporciona varias acciones interpretando qué es lo que quiere preguntar el usuario.\nPor ejemplo, si el usuario dice "quiero arreglar mi nevera", tu sugeriras "Arreglar nevera" Mínimo 2 y un máximo de 3, ponlas en este formato y no digas nada más. Respondes solo en formato en este formato JSON: ["Arreglar nevera", "Reparar nevera"].
         `,
         },
       ],
@@ -60,7 +53,6 @@ const SearchScreen = ({navigation}) => {
           const parsedQuestions = JSON.parse(questions);
           setIsLoading(false);
           console.log(response.data.choices[0].message.content);
-
           if (parsedQuestions[0] === 'Lenguaje ofensivo')
             setError('Lenguaje ofensivo, introduce otro tipo de pregunta');
           else {
@@ -69,7 +61,6 @@ const SearchScreen = ({navigation}) => {
           }
         })
         .catch(err => console.log(err));
-
       //   navigation.navigate('FirstStep', {
       //     questions:
       //       '["Arreglar nevera","Reparar nevera","Consultar detalles de la nevera"]',
@@ -77,8 +68,6 @@ const SearchScreen = ({navigation}) => {
     } else {
       setError('Por favor, introduce una pregunta');
     }
-
-    // console.log(response.data.choices[0].message.content);
   };
 
   return (

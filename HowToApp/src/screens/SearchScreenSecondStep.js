@@ -1,17 +1,35 @@
 import React, {useEffect} from 'react';
-import {View, TouchableOpacity, TextInput, ScrollView} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import HeaderOptions from '../components/HeaderOptions';
 import CustomText from '../components/CustomText';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import Solution from '../components/Solution';
+import openai from '../api/openai-config';
+
+function isJsonString(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
 
 const SearchScreenSecondStep = ({route, navigation}) => {
   const {query, contextQuestions} = route.params;
   const parsedQuestions = JSON.parse(contextQuestions);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [user, setUserData] = React.useState({});
 
   useEffect(() => {
     const newObject = {};
-
+    setIsLoading(true);
     for (let index = 0; index < parsedQuestions.length; index++) {
       const question = parsedQuestions[index];
       console.log('entro');
@@ -35,12 +53,63 @@ const SearchScreenSecondStep = ({route, navigation}) => {
       obj[path[0]] = value;
     }
   }
-  const showFinalSolution = () => {
-    console.log(user);
-    navigation.navigate('SolutionScreen', {
-      query: query,
-      contextQuestions: '["Modelo de marca", "Marca", "Tipo"]',
+
+  const callOpenAI = async () => {
+    const stringInfo = JSON.stringify(user);
+    const response = await openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      max_tokens: 780,
+      temperature: 0.5,
+      messages: [
+        {
+          role: 'system',
+          //content: `El usuario quiere hacer esto ${query}. Además, hay que tener en cuenta esta información adicional: [${user}].\nCon toda esta información, proporciona una descripción de al menos un párrafo de problema explicando la problemática en general, una frase para buscar un video en youtube, las herramientas o elementos que necesite el usuario sin numerar, los pasos detallados para resolverlo con un máximo de 5 pasos y una lista de consejos sin numerar con un máximo de 5 consejos, todo en formato JSON y con este formato:\n{"descripcion":"","frase_youtube":"","herramientas":"["",""]","pasos": ["paso","paso"],"consejos":[]}.`,
+          content: `El usuario quiere hacer esto "${query.trim()}". Además, hay que tener en cuenta esta información adicional: [${stringInfo}]\nCon toda esta información, proporciona una descripción de al menos un párrafo de problema explicando la problemática en general, una frase para buscar un video en youtube, las herramientas o elementos que necesite el usuario sin numerar, los pasos detallados para resolverlo sin numerar con un máximo de 5 pasos y una lista de consejos sin numerar con un máximo de 5 consejos, todo en formato JSON y con este formato:\n{"descripcion":"","frase_youtube":"","herramientas":"["",""]","pasos": ["Arreglar la mesa...","Montar la ..."],"consejos":[]}`,
+        },
+      ],
     });
+    return response;
+  };
+
+  const showFinalSolution = () => {
+    console.log(`${JSON.stringify(user)}`);
+    setIsLoading(true);
+    callOpenAI().then(response => {
+      const solutionInfo = response.data.choices[0].message.content;
+      const isJson = isJsonString(solutionInfo);
+      setIsLoading(false);
+
+      console.log(response.data.choices[0].message.content);
+
+      if (isJson) {
+        navigation.navigate('SolutionScreen', {
+          solutionInfo: solutionInfo,
+        });
+      } else {
+        console.log('not a json');
+      }
+    });
+    // navigation.navigate('SolutionScreen', {
+    //   solutionInfo: `{
+    //     "descripcion":"El problema con la nevera Samsung modelo RB38C671DSA/EF es que no se enciende la luz. Esto puede deberse a un problema en el interruptor de la luz o a un fallo en la conexión eléctrica. En ambos casos, es necesario realizar una serie de pasos para solucionar el problema y restablecer el funcionamiento normal de la nevera.",
+    //     "frase_youtube":"Cómo arreglar la luz de la nevera Samsung",
+    //     "herramientas":["Destornillador", "multímetro"],
+    //     "pasos": [
+    //     "Desconecta la nevera de la corriente eléctrica.",
+    //     "Retira la tapa del interruptor de la luz utilizando un destornillador.",
+    //     "Comprueba la continuidad del interruptor con un multímetro. Si no hay continuidad, reemplázalo por uno nuevo.",
+    //     "Verifica que los cables de conexión estén en buen estado y correctamente conectados.",
+    //     "Vuelve a colocar la tapa del interruptor y conecta la nevera a la corriente eléctrica."
+    //     ],
+    //     "consejos":[
+    //     "Antes de realizar cualquier reparación, asegúrate de desconectar la nevera de la corriente eléctrica para evitar posibles descargas eléctricas.",
+    //     "Si no tienes experiencia en reparaciones eléctricas, es recomendable que consultes a un técnico especializado para evitar daños mayores.",
+    //     "Utiliza un destornillador adecuado para evitar dañar los tornillos de la nevera.",
+    //     "Ten cuidado al manipular los cables de conexión para evitar cortocircuitos.",
+    //     "Si el problema persiste después de realizar estos pasos, es posible que haya un fallo en el sistema eléctrico de la nevera y sea necesario llamar a un técnico para su reparación."
+    //     ]
+    //     }`,
+    // });
   };
 
   return (
@@ -91,25 +160,31 @@ const SearchScreenSecondStep = ({route, navigation}) => {
         </View>
       </View>
 
-      <View className="flex-row gap-4 h-[150px] justify-center items-center">
-        <View className="flex-1 items-center ">
-          <TouchableOpacity onPress={() => showFinalSolution()}>
-            <View className="w-[72px] h-[72px] items-center justify-center bg-[#3282FD] rounded-full">
-              <IonIcon name="checkmark" color="#FFFFFF" size={48} />
-            </View>
-          </TouchableOpacity>
+      {isLoading ? (
+        <View className="items-center h-[120px] justify-center">
+          <ActivityIndicator size="large" color="#3282FD" />
         </View>
-        <View className="flex-1 items-center">
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('SearchScreen');
-            }}>
-            <View className="w-[72px] h-[72px] items-center  justify-center border-2 border-[#F3530E] rounded-full">
-              <IonIcon name="close" color="#F3530E" size={48} />
-            </View>
-          </TouchableOpacity>
+      ) : (
+        <View className="flex-row gap-4 h-[150px] justify-center items-center">
+          <View className="flex-1 items-center ">
+            <TouchableOpacity onPress={() => showFinalSolution()}>
+              <View className="w-[72px] h-[72px] items-center justify-center bg-[#3282FD] rounded-full">
+                <IonIcon name="checkmark" color="#FFFFFF" size={48} />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View className="flex-1 items-center">
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('SearchScreen');
+              }}>
+              <View className="w-[72px] h-[72px] items-center  justify-center border-2 border-[#F3530E] rounded-full">
+                <IonIcon name="close" color="#F3530E" size={48} />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      )}
     </ScrollView>
   );
 };

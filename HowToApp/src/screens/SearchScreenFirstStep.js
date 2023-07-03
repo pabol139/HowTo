@@ -40,12 +40,7 @@ const SearchScreenFirstStep = ({route, navigation}) => {
       messages: [
         {
           role: 'system',
-          content: `El usuario introduce esta frase: "${text}"
-          ¿Qué más filtros necesita el usuario para recibir una respuesta acertada?
-          Por ejemplo, si el usuario dice "quiero arreglar mi nevera",
-          le dirás ["Modelo", "Dimensiones", "Marca de la nevera"].
-          Proporciona al usuario las palabras clave, mínimo 2 y un máximo de 3 y en este formato JSON: ["", "", ""].
-          No digas nada más.
+          content: `El usuario introduce esta frase: "${text}"\n¿Qué más filtros necesita el usuario para recibir una respuesta acertada? Por ejemplo, si el usuario dice "quiero arreglar mi nevera",le dirás ["Modelo", "Dimensiones", "Marca de la nevera"].\nProporciona al usuario las palabras clave, mínimo 2 y un máximo de 3 y en este formato JSON: ["", "", ""]. No digas nada más.
         `,
         },
       ],
@@ -60,9 +55,7 @@ const SearchScreenFirstStep = ({route, navigation}) => {
         const questions = response.data.choices[0].message.content;
         const isJson = isJsonString(questions);
         setIsLoading(false);
-
         console.log(response.data.choices[0].message.content);
-
         if (isJson) {
           navigation.navigate('SecondStep', {
             query: item,
@@ -72,14 +65,11 @@ const SearchScreenFirstStep = ({route, navigation}) => {
           console.log('not a json');
         }
       })
-
       .catch(err => console.log(err));
     // navigation.navigate('SecondStep', {
     //   query: item,
     //   contextQuestions: '["Modelo de marca", "Marca", "Tipo"]',
     // });
-
-    // console.log(response.data.choices[0].message.content);
   };
 
   return (
