@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   SafeAreaView,
-  Text,
   View,
   SectionList,
   TouchableOpacity,
@@ -17,7 +16,6 @@ import CustomModal from '../components/CustomModal';
 import {
   Menu,
   MenuOptions,
-  MenuOption,
   MenuTrigger,
   renderers,
 } from 'react-native-popup-menu';
@@ -59,10 +57,7 @@ const FavouritesScreen = ({navigation}) => {
 
   const showInfo = id => {
     const auxObject = favourites.filtered('_id == $0', id)[0];
-    console.log(auxObject);
-
     const favouriteObject = JSON.parse(JSON.stringify(auxObject));
-    console.log(favouriteObject);
 
     navigation.navigate('FavouriteScreen', {
       favouriteObject: favouriteObject,

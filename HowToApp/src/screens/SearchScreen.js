@@ -5,11 +5,9 @@ import {
   View,
   TouchableOpacity,
   ActivityIndicator,
-  ScrollView,
 } from 'react-native';
 import HeaderOptions from '../components/HeaderOptions';
 import FontIcon from 'react-native-vector-icons/FontAwesome5';
-import {useFocusEffect} from '@react-navigation/native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../components/CustomText';
 import openai from '../api/openai-config';
@@ -44,7 +42,6 @@ const SearchScreen = ({navigation}) => {
       //     const questions = response.data.choices[0].message.content;
       //     const parsedQuestions = JSON.parse(questions);
       //     setIsLoading(false);
-      //     console.log(response.data.choices[0].message.content);
       //     if (parsedQuestions[0] === 'Lenguaje ofensivo')
       //       setError('Lenguaje ofensivo, introduce otro tipo de pregunta');
       //     else {

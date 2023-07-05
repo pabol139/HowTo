@@ -15,7 +15,6 @@ import {YOUTUBE_API_KEY} from '@env';
 import openai from '../api/openai-config';
 import realmContext from '../data/config/howto-realm';
 const {useQuery, useRealm, useObject} = realmContext;
-import {useFocusEffect} from '@react-navigation/native';
 
 import axios from 'axios';
 import CustomModal from '../components/CustomModal';
@@ -88,7 +87,6 @@ const SolutionScreen = ({route, navigation}) => {
         setIsLoading(false);
       })
       .catch(err => console.log(err));
-    console.log(query);
   }
 
   const changeModalVisible = bool => {
@@ -134,7 +132,6 @@ const SolutionScreen = ({route, navigation}) => {
   }, []);
 
   const getDefinition = async phrase => {
-    console.log(phrase);
     const response = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       max_tokens: 780,
@@ -212,8 +209,6 @@ const SolutionScreen = ({route, navigation}) => {
                   const definitionObject = `${content}|${definitionInfo}`;
                   setDefinitions([...definitions, definitionObject]);
                   setModalContent(definitionInfo);
-
-                  console.log(response.data.choices[0].message.content);
                 })
                 .catch(err => console.log(err));
             }}
@@ -265,8 +260,6 @@ const SolutionScreen = ({route, navigation}) => {
                         const definitionObject = `${content}|${definitionInfo}`;
                         setDefinitions([...definitions, definitionObject]);
                         setModalContent(definitionInfo);
-
-                        console.log(response.data.choices[0].message.content);
                       })
                       .catch(err => console.log(err));
                   }}
@@ -301,8 +294,6 @@ const SolutionScreen = ({route, navigation}) => {
                         const definitionObject = `${content}|${definitionInfo}`;
                         setDefinitions([...definitions, definitionObject]);
                         setModalContent(definitionInfo);
-
-                        console.log(response.data.choices[0].message.content);
                       })
                       .catch(err => console.log(err));
                   }}
@@ -342,8 +333,6 @@ const SolutionScreen = ({route, navigation}) => {
                         const definitionObject = `${content}|${definitionInfo}`;
                         setDefinitions([...definitions, definitionObject]);
                         setModalContent(definitionInfo);
-
-                        console.log(response.data.choices[0].message.content);
                       })
                       .catch(err => console.log(err));
                   }}

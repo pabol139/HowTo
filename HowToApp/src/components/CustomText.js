@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Text as ReactText,
-  StyleSheet,
-  StyleProp,
-  TextStyle,
-} from 'react-native';
+import {Text as ReactText} from 'react-native';
 
 const fontMap = new Map();
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, Text, View, TouchableOpacity} from 'react-native';
+import {View} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import CustomText from './CustomText';
 

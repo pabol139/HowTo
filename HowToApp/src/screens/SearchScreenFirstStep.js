@@ -55,7 +55,6 @@ const SearchScreenFirstStep = ({route, navigation}) => {
     //     const questions = response.data.choices[0].message.content;
     //     const isJson = isJsonString(questions);
     //     setIsLoading(false);
-    //     console.log(response.data.choices[0].message.content);
     //     if (isJson) {
     //       navigation.navigate('SecondStep', {
     //         query: item,

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -10,25 +10,13 @@ import {
 import HeaderOptions from '../components/HeaderOptions';
 import CustomText from '../components/CustomText';
 import YoutubePlayer from 'react-native-youtube-iframe';
-import {SelectableText} from '@alentoma/react-native-selectable-text';
-import {YOUTUBE_API_KEY} from '@env';
-import openai from '../api/openai-config';
-import realmContext from '../data/config/howto-realm';
-const {RealmProvider, useQuery, useRealm, useObject} = realmContext;
-
-import axios from 'axios';
 import CustomModal from '../components/CustomModal';
-import {Solucion} from '../data/models/howto-models';
 
 const FavouriteScreen = ({route, navigation}) => {
   const {favouriteObject} = route.params;
-
-  const realm = useRealm();
-  const favourites = useQuery('Favorito');
   const [playing, setPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [isFavourite, setIsFavourite] = useState(false);
   const [modalContent, setModalContent] = useState('');
 
   const title = favouriteObject.title;
@@ -54,7 +42,6 @@ const FavouriteScreen = ({route, navigation}) => {
   };
 
   const showDescriptionContent = text => {
-    console.log('entro');
     setModalVisible(true);
     setModalContent(text);
   };

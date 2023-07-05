@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Text, View, KeyboardAvoidingView} from 'react-native';
+import {View, KeyboardAvoidingView} from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import FavouritesScreen from '../screens/FavouritesScreen';
 import HistoricScreen from '../screens/HistoricScreen';
@@ -12,7 +12,6 @@ import SearchScreenSecondStep from '../screens/SearchScreenSecondStep';
 import SolutionScreen from '../screens/SolutionScreen';
 import FavouriteScreen from '../screens/FavouriteScreen';
 import FontIcon from 'react-native-vector-icons/FontAwesome5';
-import SettingsScreen from '../screens/SettingsScreen';
 import {useHeaderHeight} from '@react-navigation/elements';
 
 const Tab = createBottomTabNavigator();

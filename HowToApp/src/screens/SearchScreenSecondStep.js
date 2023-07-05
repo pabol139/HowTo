@@ -9,7 +9,6 @@ import {
 import HeaderOptions from '../components/HeaderOptions';
 import CustomText from '../components/CustomText';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import Solution from '../components/Solution';
 import openai from '../api/openai-config';
 
 function isJsonString(str) {
@@ -31,7 +30,6 @@ const SearchScreenSecondStep = ({route, navigation}) => {
     const newObject = {};
     for (let index = 0; index < parsedQuestions.length; index++) {
       const question = parsedQuestions[index];
-      console.log('entro');
       setDeepValue(newObject, '', question);
     }
     setUserData(newObject);
@@ -70,14 +68,11 @@ const SearchScreenSecondStep = ({route, navigation}) => {
   };
 
   const showFinalSolution = () => {
-    // console.log(`${JSON.stringify(user)}`);
     // setIsLoading(true);
     // callOpenAI().then(response => {
     //   const solutionInfo = response.data.choices[0].message.content;
     //   const isJson = isJsonString(solutionInfo);
     //   setIsLoading(false);
-
-    //   console.log(response.data.choices[0].message.content);
 
     //   if (isJson) {
     //     navigation.navigate('SolutionScreen', {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, Text, View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import CustomText from './CustomText';
 import openai from '../api/openai-config';
@@ -14,7 +14,6 @@ function isJsonString(str) {
 }
 
 const Solution = ({solutionId, context, children, navigation}) => {
-  console.log(typeof context);
   const callOpenAI = async query => {
     const response = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',

@@ -1,6 +1,5 @@
 import React from 'react';
-import {SafeAreaView, Text, View, TouchableOpacity} from 'react-native';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import {View} from 'react-native';
 import CustomText from './CustomText';
 
 const Option = ({children, number}) => {
