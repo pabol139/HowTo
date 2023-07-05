@@ -49,27 +49,27 @@ const SearchScreenFirstStep = ({route, navigation}) => {
   };
 
   const onSubmitNextStep = item => {
-    setIsLoading(true);
-    callOpenAI(item)
-      .then(response => {
-        const questions = response.data.choices[0].message.content;
-        const isJson = isJsonString(questions);
-        setIsLoading(false);
-        console.log(response.data.choices[0].message.content);
-        if (isJson) {
-          navigation.navigate('SecondStep', {
-            query: item,
-            contextQuestions: questions,
-          });
-        } else {
-          console.log('not a json');
-        }
-      })
-      .catch(err => console.log(err));
-    // navigation.navigate('SecondStep', {
-    //   query: item,
-    //   contextQuestions: '["Modelo de marca", "Marca", "Tipo"]',
-    // });
+    // setIsLoading(true);
+    // callOpenAI(item)
+    //   .then(response => {
+    //     const questions = response.data.choices[0].message.content;
+    //     const isJson = isJsonString(questions);
+    //     setIsLoading(false);
+    //     console.log(response.data.choices[0].message.content);
+    //     if (isJson) {
+    //       navigation.navigate('SecondStep', {
+    //         query: item,
+    //         contextQuestions: questions,
+    //       });
+    //     } else {
+    //       console.log('not a json');
+    //     }
+    //   })
+    //   .catch(err => console.log(err));
+    navigation.navigate('SecondStep', {
+      query: item,
+      contextQuestions: '["Modelo de marca", "Marca", "Tipo"]',
+    });
   };
 
   return (

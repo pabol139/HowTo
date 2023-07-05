@@ -1,69 +1,71 @@
-import {React, useEffect, useState} from 'react';
-import {
-  SafeAreaView,
-  SectionList,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import {React} from 'react';
+import {SafeAreaView, SectionList, Image} from 'react-native';
 import HeaderOptions from '../components/HeaderOptions';
 import Solution from '../components/Solution';
 import realmContext from '../data/config/howto-realm';
 import CustomText from '../components/CustomText';
+import {useNetInfo} from '@react-native-community/netinfo';
 
-const {RealmProvider, useQuery, useRealm} = realmContext;
-
-//const solutions = useQuery('Solucion');
+const {useQuery} = realmContext;
 
 const HomeScreen = ({navigation}) => {
-  const realm = useRealm();
   const solutions = useQuery('Solucion');
-  const mostRecentSolutions = solutions.sorted('created_at', true);
-  const slicedSolutions = mostRecentSolutions.slice(0, maxSolutions);
+  const netInfo = useNetInfo();
 
   const maxSolutions = 3;
+  const mostRecentSolutions = solutions.sorted('created_at', true);
+  const slicedSolutions = mostRecentSolutions.slice(0, maxSolutions);
 
   const recentOptions = [
     {
       title: 'Más recientes',
-      data: slicedSolutions,
+      data:
+        netInfo.isConnected && netInfo.isInternetReachable
+          ? slicedSolutions
+          : [
+              'No se pueden mostrar tus búsquedas más recientes porque no tienes conexión a internet.',
+            ],
     },
   ];
 
-  const addSolution = () => {
-    realm.write(() => {
-      realm.create('Solucion', {
-        _id: new Realm.BSON.ObjectId(),
-        query: 'test query',
-        created_at: new Date(),
-      });
-    });
-  };
-
-  const deleteSolutions = () => {
-    realm.write(() => {
-      realm.delete(solutions);
-    });
-  };
-
   //deleteSolution(solutions);
 
-  console.log(slicedSolutions);
   return (
     <SafeAreaView className="flex-1 bg-white">
       <HeaderOptions navigation={navigation} settings={true}></HeaderOptions>
-      <SectionList
-        sections={recentOptions}
-        className="mt-10 px-6"
-        keyExtractor={(item, index) => item + index}
-        renderItem={({item}) => <Solution>{item.query}</Solution>}
-        renderSectionHeader={({section: {title}}) => (
-          <CustomText weight={'semi-bold'} style={'text-2xl text-[#3F3F3F]'}>
-            {title}
-          </CustomText>
-        )}></SectionList>
+
+      {solutions.length > 0 ? (
+        <SectionList
+          sections={recentOptions}
+          className="mt-10 px-6"
+          keyExtractor={(item, index) => item + index}
+          renderItem={({item}) => {
+            return netInfo.isConnected && netInfo.isInternetReachable ? (
+              <Solution
+                context={item.context}
+                solutionId={item._id}
+                navigation={navigation}>
+                {item.query}
+              </Solution>
+            ) : (
+              <CustomText
+                weight={'bold'}
+                style={'text-[#3F3F3F] text-[14px] text-center p-2 mt-6'}>
+                {item}
+              </CustomText>
+            );
+          }}
+          renderSectionHeader={({section: {title}}) => (
+            <CustomText weight={'semi-bold'} style={'text-2xl text-[#3F3F3F]'}>
+              {title}
+            </CustomText>
+          )}></SectionList>
+      ) : (
+        <CustomText weight={'bold'} style={'text-2xl mt-24 mb-32 text-center'}>
+          ¡Haz tu primera búsqueda!
+        </CustomText>
+      )}
+
       <Image
         source={require('../assets/images/home.png')}
         style={{

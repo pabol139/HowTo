@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import BottomNavigator from './src/navigation/BottomNavigator';
 import {Appearance} from 'react-native';
 import SettingsScreen from './src/screens/SettingsScreen';
+import {MenuProvider} from 'react-native-popup-menu';
 
 const {RealmProvider} = realmContext;
 const Stack = createNativeStackNavigator();
@@ -50,18 +51,20 @@ function App() {
   return (
     isAppFirstLaunched !== null && (
       <RealmProvider>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-            {isAppFirstLaunched && (
-              <Stack.Screen
-                name="OnBoardingScreen"
-                component={OnboardingScreen}
-              />
-            )}
-            <Stack.Screen name="Home" component={BottomNavigator} />
-            <Stack.Screen name="Settings" component={SettingsScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <MenuProvider>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+              {isAppFirstLaunched && (
+                <Stack.Screen
+                  name="OnBoardingScreen"
+                  component={OnboardingScreen}
+                />
+              )}
+              <Stack.Screen name="Home" component={BottomNavigator} />
+              <Stack.Screen name="Settings" component={SettingsScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </MenuProvider>
       </RealmProvider>
     )
   );

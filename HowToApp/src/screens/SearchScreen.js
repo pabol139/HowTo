@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import HeaderOptions from '../components/HeaderOptions';
 import FontIcon from 'react-native-vector-icons/FontAwesome5';
@@ -12,22 +13,13 @@ import {useFocusEffect} from '@react-navigation/native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import CustomText from '../components/CustomText';
 import openai from '../api/openai-config';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const SearchScreen = ({navigation}) => {
   const [text, onChangeText] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState('');
-
-  //   useFocusEffect(
-  //     React.useCallback(() => {
-  //       // Do something when the screen is focused
-
-  //       return () => {
-  //         setIsLoading(false);
-  //         onChangeText('');
-  //       };
-  //     }, []),
-  //   );
+  const netInfo = useNetInfo();
 
   const callOpenAI = async () => {
     const response = await openai.createChatCompletion({
@@ -46,25 +38,25 @@ const SearchScreen = ({navigation}) => {
   };
   const onSubmitNextStep = () => {
     if (text !== '') {
-      setIsLoading(true);
-      callOpenAI()
-        .then(response => {
-          const questions = response.data.choices[0].message.content;
-          const parsedQuestions = JSON.parse(questions);
-          setIsLoading(false);
-          console.log(response.data.choices[0].message.content);
-          if (parsedQuestions[0] === 'Lenguaje ofensivo')
-            setError('Lenguaje ofensivo, introduce otro tipo de pregunta');
-          else {
-            onChangeText('');
-            navigation.navigate('FirstStep', {questions: questions});
-          }
-        })
-        .catch(err => console.log(err));
-      //   navigation.navigate('FirstStep', {
-      //     questions:
-      //       '["Arreglar nevera","Reparar nevera","Consultar detalles de la nevera"]',
-      //   });
+      // setIsLoading(true);
+      // callOpenAI()
+      //   .then(response => {
+      //     const questions = response.data.choices[0].message.content;
+      //     const parsedQuestions = JSON.parse(questions);
+      //     setIsLoading(false);
+      //     console.log(response.data.choices[0].message.content);
+      //     if (parsedQuestions[0] === 'Lenguaje ofensivo')
+      //       setError('Lenguaje ofensivo, introduce otro tipo de pregunta');
+      //     else {
+      //       onChangeText('');
+      //       navigation.navigate('FirstStep', {questions: questions});
+      //     }
+      //   })
+      //   .catch(err => console.log(err));
+      navigation.navigate('FirstStep', {
+        questions:
+          '["Arreglar nevera","Reparar nevera","Consultar detalles de la nevera"]',
+      });
     } else {
       setError('Por favor, introduce una pregunta');
     }
@@ -77,51 +69,58 @@ const SearchScreen = ({navigation}) => {
         <CustomText
           weight={'bold'}
           style={
-            'text-4xl px-5 w-full mb-8 text-center mt-[-100] text-[#3F3F3F]'
+            'text-4xl px-5 w-full mb-8 text-center mt-[-200] text-[#3F3F3F]'
           }>
           ¿Qué necesitas?
         </CustomText>
-
-        <View className="flex-row w-full items-center relative">
-          <View className="absolute left-8 z-10">
-            <FontIcon name="search" color="gray" size={25} />
-          </View>
-          <TextInput
-            placeholderTextColor={'#AEAEAE'}
-            style={{
-              height: 50,
-              margin: 20,
-              padding: 10,
-              backgroundColor: '#F4F3F6',
-              paddingLeft: 50,
-              paddingRight: 50,
-              borderRadius: 100,
-              fontFamily: 'Inter-Regular',
-              fontSize: 16,
-              flex: 1,
-              color: '#3F3F3F',
-            }}
-            onChangeText={onChangeText}
-            placeholder="Quiero arreglar mi nevera..."
-            value={text}
-            autoFocus={true}
-            onSubmitEditing={() => onSubmitNextStep()}
-            onChange={() => {
-              setError('');
-            }}
-          />
-          {isLoading ? (
-            <View className="absolute right-8">
-              <ActivityIndicator size="large" color="#3282FD" />
+        {netInfo.isConnected && netInfo.isInternetReachable ? (
+          <View className="flex-row w-full items-center relative">
+            <View className="absolute left-8 z-10">
+              <FontIcon name="search" color="gray" size={25} />
             </View>
-          ) : (
-            <TouchableOpacity
-              className="absolute right-6"
-              onPress={() => onSubmitNextStep()}>
-              <IonIcon name="arrow-up-circle" color="#3282FD" size={38} />
-            </TouchableOpacity>
-          )}
-        </View>
+            <TextInput
+              placeholderTextColor={'#AEAEAE'}
+              style={{
+                height: 50,
+                margin: 20,
+                padding: 10,
+                backgroundColor: '#F4F3F6',
+                paddingLeft: 50,
+                paddingRight: 50,
+                borderRadius: 100,
+                fontFamily: 'Inter-Regular',
+                fontSize: 16,
+                flex: 1,
+                color: '#3F3F3F',
+              }}
+              onChangeText={onChangeText}
+              placeholder="Quiero arreglar mi nevera..."
+              value={text}
+              autoFocus={true}
+              onSubmitEditing={() => onSubmitNextStep()}
+              onChange={() => {
+                setError('');
+              }}
+            />
+            {isLoading ? (
+              <View className="absolute right-8">
+                <ActivityIndicator size="large" color="#3282FD" />
+              </View>
+            ) : (
+              <TouchableOpacity
+                className="absolute right-6"
+                onPress={() => onSubmitNextStep()}>
+                <IonIcon name="arrow-up-circle" color="#3282FD" size={38} />
+              </TouchableOpacity>
+            )}
+          </View>
+        ) : (
+          <CustomText
+            weight={'semi-bold'}
+            style={'text-[#F3530E] text-center px-4'}>
+            Para utilizar el buscador, es necesario estar conectado a internet.
+          </CustomText>
+        )}
         <CustomText weight={'semi-bold'} style={'text-[#F3530E]'}>
           {error}
         </CustomText>

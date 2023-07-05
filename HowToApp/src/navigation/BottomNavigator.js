@@ -10,6 +10,7 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 import SearchScreenFirstStep from '../screens/SearchScreenFirstStep';
 import SearchScreenSecondStep from '../screens/SearchScreenSecondStep';
 import SolutionScreen from '../screens/SolutionScreen';
+import FavouriteScreen from '../screens/FavouriteScreen';
 import FontIcon from 'react-native-vector-icons/FontAwesome5';
 import SettingsScreen from '../screens/SettingsScreen';
 import {useHeaderHeight} from '@react-navigation/elements';
@@ -26,6 +27,7 @@ const BottomNavigator = () => {
       <Tab.Navigator
         id="bottomNavigator"
         screenOptions={{
+          unmountOnBlur: true,
           headerShown: false,
           tabBarShowLabel: false,
           tabBarActiveTintColor: '#3282FD',
@@ -99,6 +101,12 @@ const BottomNavigator = () => {
           }}
           name="SolutionScreen"
           component={SolutionScreen}></Tab.Screen>
+        <Tab.Screen
+          options={{
+            tabBarItemStyle: [{display: 'none'}],
+          }}
+          name="FavouriteScreen"
+          component={FavouriteScreen}></Tab.Screen>
       </Tab.Navigator>
     </KeyboardAvoidingView>
   );
