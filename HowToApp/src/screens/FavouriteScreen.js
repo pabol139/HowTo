@@ -11,6 +11,7 @@ import HeaderOptions from '../components/HeaderOptions';
 import CustomText from '../components/CustomText';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import CustomModal from '../components/CustomModal';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const FavouriteScreen = ({route, navigation}) => {
   const {favouriteObject} = route.params;
@@ -18,6 +19,7 @@ const FavouriteScreen = ({route, navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState('');
+  const netInfo = useNetInfo();
 
   const title = favouriteObject.title;
   const description = favouriteObject.description;
@@ -105,13 +107,19 @@ const FavouriteScreen = ({route, navigation}) => {
             <View className="items-center h-20 justify-center">
               <ActivityIndicator size="large" color="#3282FD" />
             </View>
-          ) : (
+          ) : netInfo.isConnected && netInfo.isInternetReachable ? (
             <YoutubePlayer
               height={200}
               play={playing}
               videoId={videoId}
               onChangeState={onStateChange}
             />
+          ) : (
+            <CustomText
+              weight={'semi-bold'}
+              style={'text-center my-10 text-lg px-5 text-[#3F3F3F]'}>
+              No se ha podido cargar el video porque no hay conexión a internet.
+            </CustomText>
           )}
         </View>
         <View className="flex-1 justify-start items-start  bg-[#F4F3F6] rounded-xl mb-4 ">
