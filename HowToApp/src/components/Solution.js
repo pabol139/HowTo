@@ -71,7 +71,7 @@ const Solution = ({solutionId, context, children, navigation}) => {
   return (
     <TouchableOpacity
       onPress={() => showInfo()}
-      className="mt-5 mr-5 w-full h-[60px] flex-row items-center border border-[#3282FD] bg-[#f0f6ff] rounded-full">
+      className="mt-5 mr-5 w-full py-2 flex-row items-center border border-[#3282FD] bg-[#f0f6ff] rounded-full">
       <View className="w-[42px] h-[42px] ml-4 mr-4 bg-white border border-[#3282FD] rounded-full items-center justify-center">
         <IonIcon
           name="chatbox-ellipses-outline"

@@ -41,8 +41,7 @@ const SearchScreenFirstStep = ({route, navigation}) => {
       messages: [
         {
           role: 'system',
-          // content: `El usuario introduce esta frase: "${text}"\n¿Qué más filtros necesita el usuario para recibir una respuesta acertada? Por ejemplo, si el usuario dice "quiero arreglar mi nevera",le dirás ["Modelo", "Dimensiones", "Marca de la nevera"].\nProporciona al usuario las palabras clave, mínimo 2 y un máximo de 3 y en este formato JSON: ["", "", ""]. No digas nada más.
-          content: `El usuario quiere hacer esto: "${text}". Ten en cuenta que no tiene ni idea de nada ni sabe hacerlo, por lo que, ¿qué más contexto tendría que añadir?  Pídele al usuario las cosas más importantes , mínimo 2 y un máximo de 3 y en este formato JSON: ["", "", ""]. Por ejemplo, si el usuario dice "quiero arreglar mi nevera",le dirás ["Modelo", "Dimensiones", "Marca de la nevera"]. No digas nada más.`,
+          content: `El usuario quiere hacer esto: "${text}". Ten en cuenta que no tiene ni idea de nada ni sabe hacerlo, por lo que, ¿qué más contexto tendría que añadir? Pídele al usuario las cosas más importantes , mínimo 2 y un máximo de 3 y en este formato JSON: ["", "", ""]. Por ejemplo, si el usuario dice "quiero arreglar mi nevera",le dirás ["Modelo", "Dimensiones", "Marca de la nevera"]. No digas nada más.`,
         },
       ],
     });

@@ -77,7 +77,7 @@ const FavouritesScreen = ({navigation}) => {
         keyExtractor={(item, index) => item + index}
         renderItem={({item}) => (
           <TouchableOpacity
-            className="mt-5 mr-5 w-full h-[60px] flex-row items-center border border-[#B12BFF] bg-[#FAF1FF] rounded-full"
+            className="mt-5 mr-5 w-full py-2 flex-row items-center border border-[#B12BFF] bg-[#FAF1FF] rounded-full"
             onPress={() => showInfo(item._id)}
             onLongPress={() => showDeleteFavourite(item._id)}>
             <FavouriteOption>{item.title}</FavouriteOption>
