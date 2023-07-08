@@ -56,7 +56,7 @@ const SearchScreenSecondStep = ({route, navigation}) => {
     const response = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       max_tokens: 780,
-      temperature: 0.5,
+      temperature: 0.7,
       messages: [
         {
           role: 'system',
@@ -68,43 +68,43 @@ const SearchScreenSecondStep = ({route, navigation}) => {
   };
 
   const showFinalSolution = () => {
-    // setIsLoading(true);
-    // callOpenAI().then(response => {
-    //   const solutionInfo = response.data.choices[0].message.content;
-    //   const isJson = isJsonString(solutionInfo);
-    //   setIsLoading(false);
+    setIsLoading(true);
+    callOpenAI().then(response => {
+      const solutionInfo = response.data.choices[0].message.content;
+      const isJson = isJsonString(solutionInfo);
+      setIsLoading(false);
 
-    //   if (isJson) {
-    //     navigation.navigate('SolutionScreen', {
-    //       solutionInfo: solutionInfo,
-    //       context: JSON.stringify(user),
-    //     });
-    //   } else {
-    //     console.log('not a json');
-    //   }
-    // });
-    navigation.navigate('SolutionScreen', {
-      solutionInfo: `{
-        "descripcion":"El problema con la nevera Samsung modelo RB38C671DSA/EF es que no se enciende la luz. Esto puede deberse a un problema en el interruptor de la luz o a un fallo en la conexión eléctrica. En ambos casos, es necesario realizar una serie de pasos para solucionar el problema y restablecer el funcionamiento normal de la nevera.",
-        "frase_youtube":"Cómo arreglar la luz de la nevera Samsung",
-        "herramientas":["Destornillador", "multímetro"],
-        "pasos": [
-        "Desconecta la nevera de la corriente eléctrica.",
-        "Retira la tapa del interruptor de la luz utilizando un destornillador.",
-        "Comprueba la continuidad del interruptor con un multímetro. Si no hay continuidad, reemplázalo por uno nuevo.",
-        "Verifica que los cables de conexión estén en buen estado y correctamente conectados.",
-        "Vuelve a colocar la tapa del interruptor y conecta la nevera a la corriente eléctrica."
-        ],
-        "consejos":[
-        "Antes de realizar cualquier reparación, asegúrate de desconectar la nevera de la corriente eléctrica para evitar posibles descargas eléctricas.",
-        "Si no tienes experiencia en reparaciones eléctricas, es recomendable que consultes a un técnico especializado para evitar daños mayores.",
-        "Utiliza un destornillador adecuado para evitar dañar los tornillos de la nevera.",
-        "Ten cuidado al manipular los cables de conexión para evitar cortocircuitos.",
-        "Si el problema persiste después de realizar estos pasos, es posible que haya un fallo en el sistema eléctrico de la nevera y sea necesario llamar a un técnico para su reparación."
-        ]
-        }`,
-      context: JSON.stringify(user),
+      if (isJson) {
+        navigation.navigate('SolutionScreen', {
+          solutionInfo: solutionInfo,
+          context: JSON.stringify(user),
+        });
+      } else {
+        console.log('not a json');
+      }
     });
+    // navigation.navigate('SolutionScreen', {
+    //   solutionInfo: `{
+    //     "descripcion":"El problema con la nevera Samsung modelo RB38C671DSA/EF es que no se enciende la luz. Esto puede deberse a un problema en el interruptor de la luz o a un fallo en la conexión eléctrica. En ambos casos, es necesario realizar una serie de pasos para solucionar el problema y restablecer el funcionamiento normal de la nevera.",
+    //     "frase_youtube":"Cómo arreglar la luz de la nevera Samsung",
+    //     "herramientas":["Destornillador", "multímetro"],
+    //     "pasos": [
+    //     "Desconecta la nevera de la corriente eléctrica.",
+    //     "Retira la tapa del interruptor de la luz utilizando un destornillador.",
+    //     "Comprueba la continuidad del interruptor con un multímetro. Si no hay continuidad, reemplázalo por uno nuevo.",
+    //     "Verifica que los cables de conexión estén en buen estado y correctamente conectados.",
+    //     "Vuelve a colocar la tapa del interruptor y conecta la nevera a la corriente eléctrica."
+    //     ],
+    //     "consejos":[
+    //     "Antes de realizar cualquier reparación, asegúrate de desconectar la nevera de la corriente eléctrica para evitar posibles descargas eléctricas.",
+    //     "Si no tienes experiencia en reparaciones eléctricas, es recomendable que consultes a un técnico especializado para evitar daños mayores.",
+    //     "Utiliza un destornillador adecuado para evitar dañar los tornillos de la nevera.",
+    //     "Ten cuidado al manipular los cables de conexión para evitar cortocircuitos.",
+    //     "Si el problema persiste después de realizar estos pasos, es posible que haya un fallo en el sistema eléctrico de la nevera y sea necesario llamar a un técnico para su reparación."
+    //     ]
+    //     }`,
+    //   context: JSON.stringify(user),
+    // });
   };
 
   return (

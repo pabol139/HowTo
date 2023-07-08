@@ -37,11 +37,12 @@ const SearchScreenFirstStep = ({route, navigation}) => {
     const response = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       max_tokens: 256,
+      temperature: 0.7,
       messages: [
         {
           role: 'system',
-          content: `El usuario introduce esta frase: "${text}"\n¿Qué más filtros necesita el usuario para recibir una respuesta acertada? Por ejemplo, si el usuario dice "quiero arreglar mi nevera",le dirás ["Modelo", "Dimensiones", "Marca de la nevera"].\nProporciona al usuario las palabras clave, mínimo 2 y un máximo de 3 y en este formato JSON: ["", "", ""]. No digas nada más.
-        `,
+          // content: `El usuario introduce esta frase: "${text}"\n¿Qué más filtros necesita el usuario para recibir una respuesta acertada? Por ejemplo, si el usuario dice "quiero arreglar mi nevera",le dirás ["Modelo", "Dimensiones", "Marca de la nevera"].\nProporciona al usuario las palabras clave, mínimo 2 y un máximo de 3 y en este formato JSON: ["", "", ""]. No digas nada más.
+          content: `El usuario quiere hacer esto: "${text}". Ten en cuenta que no tiene ni idea de nada ni sabe hacerlo, por lo que, ¿qué más contexto tendría que añadir?  Pídele al usuario las cosas más importantes , mínimo 2 y un máximo de 3 y en este formato JSON: ["", "", ""]. Por ejemplo, si el usuario dice "quiero arreglar mi nevera",le dirás ["Modelo", "Dimensiones", "Marca de la nevera"]. No digas nada más.`,
         },
       ],
     });
@@ -49,26 +50,26 @@ const SearchScreenFirstStep = ({route, navigation}) => {
   };
 
   const onSubmitNextStep = item => {
-    // setIsLoading(true);
-    // callOpenAI(item)
-    //   .then(response => {
-    //     const questions = response.data.choices[0].message.content;
-    //     const isJson = isJsonString(questions);
-    //     setIsLoading(false);
-    //     if (isJson) {
-    //       navigation.navigate('SecondStep', {
-    //         query: item,
-    //         contextQuestions: questions,
-    //       });
-    //     } else {
-    //       console.log('not a json');
-    //     }
-    //   })
-    //   .catch(err => console.log(err));
-    navigation.navigate('SecondStep', {
-      query: item,
-      contextQuestions: '["Modelo de marca", "Marca", "Tipo"]',
-    });
+    setIsLoading(true);
+    callOpenAI(item)
+      .then(response => {
+        const questions = response.data.choices[0].message.content;
+        const isJson = isJsonString(questions);
+        setIsLoading(false);
+        if (isJson) {
+          navigation.navigate('SecondStep', {
+            query: item,
+            contextQuestions: questions,
+          });
+        } else {
+          console.log('not a json');
+        }
+      })
+      .catch(err => console.log(err));
+    // navigation.navigate('SecondStep', {
+    //   query: item,
+    //   contextQuestions: '["Modelo de marca", "Marca", "Tipo"]',
+    // });
   };
 
   return (

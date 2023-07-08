@@ -23,7 +23,7 @@ const SearchScreen = ({navigation}) => {
     const response = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       max_tokens: 256,
-      temperature: 0.5,
+      temperature: 0.7,
       messages: [
         {
           role: 'system',
@@ -36,24 +36,24 @@ const SearchScreen = ({navigation}) => {
   };
   const onSubmitNextStep = () => {
     if (text !== '') {
-      // setIsLoading(true);
-      // callOpenAI()
-      //   .then(response => {
-      //     const questions = response.data.choices[0].message.content;
-      //     const parsedQuestions = JSON.parse(questions);
-      //     setIsLoading(false);
-      //     if (parsedQuestions[0] === 'Lenguaje ofensivo')
-      //       setError('Lenguaje ofensivo, introduce otro tipo de pregunta');
-      //     else {
-      //       onChangeText('');
-      //       navigation.navigate('FirstStep', {questions: questions});
-      //     }
-      //   })
-      //   .catch(err => console.log(err));
-      navigation.navigate('FirstStep', {
-        questions:
-          '["Arreglar nevera","Reparar nevera","Consultar detalles de la nevera"]',
-      });
+      setIsLoading(true);
+      callOpenAI()
+        .then(response => {
+          const questions = response.data.choices[0].message.content;
+          const parsedQuestions = JSON.parse(questions);
+          setIsLoading(false);
+          if (parsedQuestions[0] === 'Lenguaje ofensivo')
+            setError('Lenguaje ofensivo, introduce otro tipo de pregunta');
+          else {
+            onChangeText('');
+            navigation.navigate('FirstStep', {questions: questions});
+          }
+        })
+        .catch(err => console.log(err));
+      // navigation.navigate('FirstStep', {
+      //   questions:
+      //     '["Arreglar nevera","Reparar nevera","Consultar detalles de la nevera"]',
+      // });
     } else {
       setError('Por favor, introduce una pregunta');
     }

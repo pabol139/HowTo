@@ -52,7 +52,7 @@ const SolutionScreen = ({route, navigation}) => {
   ];
 
   useEffect(() => {
-    //videoSearch(YOUTUBE_API_KEY, title, 1);
+    videoSearch(YOUTUBE_API_KEY, title, 1);
 
     if (!existingId) {
       realm.write(() => {
@@ -70,7 +70,7 @@ const SolutionScreen = ({route, navigation}) => {
       setSolutionObject(solutionObject);
     }
 
-    setVideoId('hzvkDxx8INE');
+    // setVideoId('hzvkDxx8INE');
   }, []);
 
   function videoSearch(key, search, maxResults) {
@@ -275,7 +275,7 @@ const SolutionScreen = ({route, navigation}) => {
               <View
                 key={i}
                 className="bg-[#F4F3F6] rounded-xl mb-5 px-5 py-2 flex-row">
-                <Text className="text-3xl mr-4 text-[#3F3F3F]">{i}</Text>
+                <Text className="text-3xl mr-4 text-[#3F3F3F]">{i + 1}</Text>
                 <SelectableText
                   menuItems={['Significado']}
                   style={{

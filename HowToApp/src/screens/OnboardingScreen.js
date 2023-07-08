@@ -51,7 +51,7 @@ const Slide = ({item}) => {
         className="mt-10"
         source={item.image}
         style={{
-          height: '62%',
+          height: '61%',
           width,
           resizeMode: 'contain',
         }}></Image>
