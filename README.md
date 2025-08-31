@@ -1,6 +1,6 @@
 # HowTo
 
-<img width="393" height="852" alt="Splash Screen" src="https://github.com/user-attachments/assets/bf64fd2d-0aae-4b43-b7cb-4e9ea36a1d59" />
+<img width="339" height="114" alt="logo1pablet 1" src="https://github.com/user-attachments/assets/0e300aea-0d44-47c3-a5ff-3a16acb97a00" />
 
 
 HowTo is an app that provides step-by-step solutions to everyday problems, with an explanatory video, a tools list, and final tips. Designed with an intuitive interface and onboarding for less-experienced users.
