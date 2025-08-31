@@ -2,7 +2,7 @@
 
 HowTo is an app that provides step-by-step solutions to everyday problems, with an explanatory video, a tools list, and final tips. Designed with an intuitive interface and onboarding for less-experienced users.
 
-Built for my degree thesis with Degree Thesis and only for Android.
+Built for my degree thesis with React Native, only for Android.
 
 ## Onboarding screen
 
