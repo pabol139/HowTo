@@ -5,7 +5,7 @@
 
 HowTo is an app that provides step-by-step solutions to everyday problems, with an explanatory video, a tools list, and final tips. Designed with an intuitive interface and onboarding for less-experienced users.
 
-Degree thesis.
+Built for my degree thesis with Degree Thesis and only for Android.
 
 ## Onboarding screen
 
@@ -21,7 +21,7 @@ Degree thesis.
 <img width="393" height="852" alt="Question Screen2" src="https://github.com/user-attachments/assets/3c444000-d6f9-42df-92ca-14d91d740363" />
 <img width="393" height="852" alt="Question Screen" src="https://github.com/user-attachments/assets/8b6a5324-dd16-41cd-9b7a-4fb3d7795d18" />
 
-##Results screen
+## Results screen
 
 <img width="393" height="852" alt="StepByStep Screen" src="https://github.com/user-attachments/assets/02ab7acc-7d8c-4960-92b6-b9f2a1a0277b" />
 
