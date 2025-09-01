@@ -1,6 +1,6 @@
 # HowTo
 
-HowTo is an app that provides step-by-step solutions to everyday problems powered by AI. Provides an explanatory video, a tools list, and final tips. Designed with an intuitive interface and onboarding for less-experienced users.
+HowTo is a mobile app that provides step-by-step solutions to everyday problems powered by AI. Provides an explanatory video, a tools list, and final tips. Designed with an intuitive interface and onboarding for less-experienced users.
 
 Built for my degree thesis with React Native, only for Android.
 
